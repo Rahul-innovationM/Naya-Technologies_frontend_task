@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import Splash from "./containers/Splash/index";
+import "./App.scss";
 
-function App() {
+import CanvasSketching from "./containers/CanvasSketching";
+
+const App = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (window.localStorage.getItem(`isLoggedIn`)) {
+      navigate(`/sketch`);
+    } else {
+      navigate(`/`);
+    }
+  }, [navigate]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path="/" element={<Splash />}></Route>
+      <Route path="/sketch" element={<CanvasSketching />}></Route>
+    </Routes>
   );
-}
+};
 
 export default App;
